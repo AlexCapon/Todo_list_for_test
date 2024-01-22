@@ -1,0 +1,17 @@
+[
+  {
+    "status": "finished",
+    "text": "Выполнено",
+    "color": "success"
+  },
+  {
+    "status": "inProgress",
+    "text": "В процессе",
+    "color": "warning"
+  },
+  {
+    "status": "inQue",
+    "text": "В очереди",
+    "color": "secondary"
+  }
+]
