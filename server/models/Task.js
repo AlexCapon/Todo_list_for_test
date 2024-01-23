@@ -1,18 +1,22 @@
 const { Schema, model} = require('mongoose');
 
-const Status = new Schema({
+const Task = new Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
   status: {
-    type: String,
-    required: true,
-  },
-  text: {
-    type: String,
-    required: true,
-  },
-  color: {
     type: String,
     required: true,
   },
 });
 
-module.exports = model('Status', Status);
+module.exports = model('Task', Task);

@@ -2,41 +2,46 @@ const mongoose = require('mongoose');
 const express = require('express');
 const config = require('config');
 const chalk = require('chalk');
+const path = require('path');
 const initDataBase = require('./startUp/initDataBase');
 const cors = require('cors');
 const { log } = require('console');
 const { showErrorMessage } = require('./util/showErrorMessage');
-const path = require('path');
+const { saveTask } = require('./db/saveTask');
+const { giveTasks } = require('./api/giveTasks');
+const { deleteTaskFromDB } = require('./db/deleteTaskFromDB');
+const { updateTask } = require('./db/updateTask');
+const Task = require('./models/Task');
 
 const PORT = config.get('port') ?? 8080;
 const app = express();
 
-// app.set('view engine', 'html');
-// app.set('views', 'page');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-// app.get('/', async (req, res) => {
-//   res.render('index', {
-//     title: 'Expess App',
-//     notes: await getNotes(),
-//     created: false,
-//   });
-// })
-app.post('/', async (req, res) => {
-  await log('await', req.body);
-  log('no await', req.body);
-})
-app.delete('/:id', async (req, res) => {
-  await removeNote(req.params.id);
-  res.render('index', { 
-    title: 'Expess App',
-    notes: await getNotes(),
-    created: false,
-  });
-}) 
+app.get('/api/get-tasks', async (req, res) => {
+  log('get tasks api triggered');
+  const tasks = await giveTasks();
+  res.json(tasks);
+});
+app.post('/api/add-tasks', async (req, res) => {
+  log('add task api triggered');
+  log('Recived task:');
+  const task = req.body;
+  log(task)
+  saveTask(task);
+});
+app.put('/api/edit-task', async (req, res) => {
+  log('put api triggered');
+  const task = req.body;
+  await Task.findOneAndReplace({ id: task.id }, task);
+});
+app.delete('/api/delete-task/:id', async (req, res) => {
+  log('delete api triggered');
+  deleteTaskFromDB(req.params.id.trim());
+});
 
 function startServerMessage() {
   let mode;

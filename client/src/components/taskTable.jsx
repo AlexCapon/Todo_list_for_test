@@ -5,7 +5,7 @@ import { status } from '../../../client/src/constants/status.js';
 import showElement from '../../../client/src/utils/showElement.js';
 
 export default function TaskTable({ tasks, onEdit, onDelete }) {
-  return (
+  if(Array.isArray(tasks)) return (
     <table className='table'>
       <thead className='tableHeader'>
         <tr>
@@ -19,10 +19,9 @@ export default function TaskTable({ tasks, onEdit, onDelete }) {
       <tbody id='tableBody' className='table'>
         {tasks.map((task) => (
           <tr key={task.id}>
-            <td><input className="form-check-input" type="checkbox" /></td>
             <td>{task.title}</td>
             <td>{task.description}</td>
-            <td className={`btn bg-${status[task.status].color} mt-2`} onClick={() => onEdit(task)}>{status[task.status].text}</td>
+            <td><button type="button" className={`btn bg-${status[task.status].color} mt-2`} onClick={() => onEdit(task)}>{status[task.status].text}</button></td>
             <td name='buttons'>
               <button id='editBtn'
                 className='btn'
