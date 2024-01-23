@@ -11,7 +11,6 @@ const { saveTask } = require('./db/saveTask');
 const { giveTasks } = require('./api/giveTasks');
 const { deleteTaskFromDB } = require('./db/deleteTaskFromDB');
 const { updateTask } = require('./db/updateTask');
-const Task = require('./models/Task');
 
 const PORT = config.get('port') ?? 8080;
 const app = express();
@@ -26,19 +25,19 @@ app.get('/api/get-tasks', async (req, res) => {
   const tasks = await giveTasks();
   res.json(tasks);
 });
-app.post('/api/add-tasks', async (req, res) => {
+app.post('/api/add-tasks', async (req) => {
   log('add task api triggered');
-  log('Recived task:');
   const task = req.body;
+  log('Recived task:');
   log(task)
   saveTask(task);
 });
-app.put('/api/edit-task', async (req, res) => {
+app.put('/api/edit-task', async (req) => {
   log('put api triggered');
   const task = req.body;
-  await Task.findOneAndReplace({ id: task.id }, task);
+  updateTask(task);
 });
-app.delete('/api/delete-task/:id', async (req, res) => {
+app.delete('/api/delete-task/:id', async (req) => {
   log('delete api triggered');
   deleteTaskFromDB(req.params.id.trim());
 });

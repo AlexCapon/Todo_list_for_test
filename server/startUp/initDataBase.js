@@ -1,7 +1,6 @@
 const Status = require('../models/Staus');
 const statusesMock = require('../mock/statuses.json');
 const { showErrorMessage } = require('../util/showErrorMessage');
-const { Model } = require('mongoose');
 const { log } = require('console');
 
 module.exports = async () => { 
@@ -11,7 +10,7 @@ module.exports = async () => {
     log('Trying to create initial entity');
     const result = await createInitialEntity(Status, statusesMock);
     log('result:', result);
-  };
+  }
  };
 
 async function createInitialEntity(Model, data) {
@@ -37,4 +36,4 @@ async function createInitialEntity(Model, data) {
       }
     })
   )
-};
+}
