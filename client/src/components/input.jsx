@@ -4,17 +4,22 @@ import PropTypes from 'prop-types';
 // eslint-disable-next-line no-unused-vars
 import showElement from '../../../client/src/utils/showElement';
 
-export default function Input({ name, type, value, onChange, label }) {
+export default function Input({ name, type, value, onChange, label, error }) {
+  const inputClass = 'form-contorl m-1' + (error ? ' is-invalid' : '');
   return (
-    <label htmlFor={name} className="form-label">
-      {label}
-      <input id={name} type={type} value={value} onChange={onChange} className="form-contorl m-1" />
-    </label>
+    <div className="container">
+      <label htmlFor={name} className="form-label">
+        {label}
+      </label>
+      <input id={name} type={type} value={value} onChange={onChange} className={inputClass} />
+      {error && <div className="invalid-feedback">{error}</div>}
+    </div>
   );
 }
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
+  error: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,

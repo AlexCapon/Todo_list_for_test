@@ -31,7 +31,7 @@ export default function ListPage() {
     setTodos((prevState) => [...prevState, newTask]);
     sendTask(newTask);
     closeModal('createModal');
-    setFormData(defaultData);
+    setTimeout(() => setFormData(defaultData), 600);
   }
   function handleEditClick(task) {
     const taskData = {
@@ -54,7 +54,7 @@ export default function ListPage() {
     setTodos(updatedTodos);
     setEditingIndex(undefined);
     closeModal('editModal');
-    setFormData(defaultData);
+    setTimeout(() => setFormData(defaultData), 600);
   }
   async function handleDelete(id) {
     requestDeleteTask(id);

@@ -4,8 +4,47 @@ import capitalize from '../../../client/src/utils/capitalize';
 // eslint-disable-next-line no-unused-vars
 import showElement from '../../../client/src/utils/showElement';
 import Selector from './selector';
+import validator from '../utils/validator';
+import { useEffect, useState } from 'react';
+import showError from '../utils/showError';
 
 export default function TaskForm({ modalId, onSubmit, data, onChange, onClose }) {
+  const [errors, setErrors] = useState({});
+  const validatorConfig = {
+    title: {
+      isRequired: {
+        message: 'Введите название задачи',
+      },
+    },
+    status: {
+      isRequired: {
+        message: 'Статус обязателен',
+      },
+    },
+  };
+  function validate() {
+    const errorsObj = validator(data, validatorConfig);
+    setErrors(errorsObj);
+    return Object.keys(errorsObj).length === 0;
+  }
+  useEffect(() => {
+    const modal = document.querySelector(`#${modalId}`);
+    modal.addEventListener(
+      'animationend',
+      () => {
+       setErrors({});
+      },
+    );
+  },[modalId]);
+  useEffect(() => {
+    const modal = document.querySelector(`#${modalId}`);
+    if(modal.hasAttribute('open')) {
+      validate();
+    } else {
+      setErrors({});
+    }
+  }, [data])
+
   function createTask() {
     const task = {
       id: Date.now(),
@@ -16,13 +55,18 @@ export default function TaskForm({ modalId, onSubmit, data, onChange, onClose })
     return task;
   }
   function submitTask() {
-    const task = createTask();
-    onSubmit(task);
+    const taskIsValid = validate();
+    if (taskIsValid) {
+      const task = createTask();
+      onSubmit(task);
+    } else {
+      showError(errors);
+    }
   }
 return ( 
   <form id={`${modalId}_form`} className="form">
     <div id="inputsContainer" className="container">
-      <Input name="title" label="Задача" type="text" value={data.title} onChange={onChange} />
+      <Input name="title" label="Задача" type="text" value={data.title} onChange={onChange} error={errors.title} />
       <Input name="description" label="Описание" type="text-aria" value={data.description} onChange={onChange} />
       <Selector name="status" id={modalId} data={data.status} onChange={onChange} />
     </div>
@@ -57,7 +101,7 @@ TaskForm.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 
 TaskForm.defaultProps = {
