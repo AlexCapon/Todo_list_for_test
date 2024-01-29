@@ -79,10 +79,10 @@ export default function ListPage() {
       <div id='tableContainer' className='container'>
         <div id='headerContainer m-2' className='container'>
           <div className='row mt-4'>
-            <div className='col-md-4 offset-md-1'>
-              <h1 className=''>Test Todo List</h1>
+            <div className='col-md-4 card p-2'>
+              <h1 className='ps-5'>Test Todo List</h1>
             </div>
-            <div className='col-md-1 offset-md-4'>
+            <div className='col-md-1 offset-md-5'>
               <button
                 id='addButton'
                 className='btn btn-primary ms-4 mt-4'

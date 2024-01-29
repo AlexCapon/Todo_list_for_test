@@ -7,44 +7,44 @@ import showElement from '../../../client/src/utils/showElement.js';
 export default function TaskTable({ tasks, onEdit, onDelete }) {
   if (Array.isArray(tasks))
     return (
-      <table className='table'>
-        <thead className='tableHeader'>
+      <table className="table">
+        <thead className="tableHeader">
           <tr>
-            <th id='checkboxColummn'></th>
+            <th id="checkboxColummn"></th>
             <th>Задача</th>
             <th>Описание</th>
             <th>Статус</th>
-            <th id='buttonsColummn'></th>
+            <th id="buttonsColummn"></th>
           </tr>
         </thead>
-        <tbody id='tableBody' className='table'>
+        <tbody id="tableBody" className="table">
           {tasks.map((task) => (
             <tr key={task.id}>
               <td>{task.title}</td>
-              <td>{task.description}</td>
+              <td style={{ maxWidth: "100vh" }}>{task.description}</td>
               <td>
                 <button
-                  type='button'
+                  type="button"
                   className={`btn bg-${status[task.status].color} mt-2`}
                   onClick={() => onEdit(task)}
-                  style={{ color: 'white' }}
+                  style={{ color: "white" }}
                 >
                   {status[task.status].text}
                 </button>
               </td>
-              <td name='buttons'>
+              <td name="buttons">
                 <button
-                  id='editBtn'
-                  className='btn'
-                  type='button'
+                  id="editBtn"
+                  className="btn"
+                  type="button"
                   onClick={() => onEdit(task)}
                 >
                   {penpaperIcon}
                 </button>
                 <button
-                  id='deleteBtn'
-                  className='btn'
-                  type='button'
+                  id="deleteBtn"
+                  className="btn"
+                  type="button"
                   onClick={() => onDelete(task.id)}
                 >
                   {trashIcon}

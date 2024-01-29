@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import showElement from '../../../client/src/utils/showElement';
 
 export default function Input({ name, type, value, onChange, label, error }) {
-  const inputClass = 'form-contorl m-1' + (error ? ' is-invalid' : '');
+  const inputClass = 'form-contorl w-100' + (error ? ' is-invalid' : '');
   return (
-    <div className="container">
-      <label htmlFor={name} className="form-label">
+    <div>
+      <label htmlFor={name} className="form-label m-1">
         {label}
       </label>
       <input id={name} type={type} value={value} onChange={onChange} className={inputClass} />

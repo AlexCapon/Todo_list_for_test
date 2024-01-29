@@ -7,8 +7,8 @@ import TaskForm from './taskForm';
 
 export default function ModalWindow({ id, headTitle, text, onSubmit, data, onChange, onClose }) {
   return (
-    <dialog id={id} className="dialog">
-      <div id="dialogContent" className="dialog-content">
+    <dialog id={id} className="dialog col-md-4">
+      <div id="dialogContent" className="dialog-content ">
         <div className="container modal-header">
           <h3>{headTitle}</h3>
           <button id="closeButton"

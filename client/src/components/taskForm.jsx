@@ -7,6 +7,7 @@ import Selector from './selector';
 import validator from '../utils/validator';
 import { useEffect, useState } from 'react';
 import showError from '../utils/showError';
+import TextArea from './textArea';
 
 export default function TaskForm({ modalId, onSubmit, data, onChange, onClose }) {
   const [errors, setErrors] = useState({});
@@ -64,16 +65,14 @@ export default function TaskForm({ modalId, onSubmit, data, onChange, onClose })
     }
   }
 return ( 
-  <form id={`${modalId}_form`} className="form">
-    <div id="inputsContainer" className="container">
+  <form id={`${modalId}_form`} className="form mb-2 p-3">
       <Input name="title" label="Задача" type="text" value={data.title} onChange={onChange} error={errors.title} />
-      <Input name="description" label="Описание" type="text-aria" value={data.description} onChange={onChange} />
-      <Selector name="status" id={modalId} data={data.status} onChange={onChange} />
-    </div>
-    <div id="buttonsContainer" className="container">
+      <TextArea name="description" label="Описание" value={data.description} onChange={onChange} placeholder="Здесь можно ввести подробное описание"/>
+      <Selector name="status" label="Статус" id={modalId} data={data.status} onChange={onChange} />
+    <div id="buttonsContainer" className="mt-4">
       <button id="submitButton"
         type="button"
-        className="btn btn-primary m-1"
+        className="btn btn-primary w-45 me-1"
         onClick={submitTask}
         key="submitButton"
       >
@@ -81,7 +80,7 @@ return (
       </button>
       <button id="cancelButton"
         type="button"
-        className="btn btn-secondary m-1"
+        className="btn btn-secondary w-45 ms-1"
         onClick={() => onClose(modalId)}
         key="cancelButton"
       >
