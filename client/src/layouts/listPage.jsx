@@ -48,7 +48,9 @@ export default function ListPage() {
     task.id = todos[editingIndex].id;
     task._id = todos[editingIndex]._id;
     const result = requestEditTask(task);
-    result.then((data) => showElement(data, 'data')).catch((err) => console.log(err));
+    result
+      .then((data) => showElement(data, 'data'))
+      .catch((err) => console.log(err));
     const updatedTodos = todos.toSpliced(editingIndex, 1, task);
 
     setTodos(updatedTodos);
@@ -75,18 +77,24 @@ export default function ListPage() {
   return (
     <div id='mainContainer' className='container'>
       <div id='tableContainer' className='container'>
-        <div id="headerContainer m-4" className="container d-flex justify-content-beetwen">
-          <h1 className="m-3">Test Todo List</h1>
-          <button
-            id='addButton'
-            className='btn btn-success m-2 mt-4 ms-5 p-2 ps-2 justify-content-end'
-            type='button'
-            onClick={handleAddClick}
-          >
-            Добавить
-          </button>
+        <div id='headerContainer m-2' className='container'>
+          <div className='row mt-4'>
+            <div className='col-md-4 offset-md-1'>
+              <h1 className=''>Test Todo List</h1>
+            </div>
+            <div className='col-md-1 offset-md-4'>
+              <button
+                id='addButton'
+                className='btn btn-primary ms-4 mt-4'
+                type='button'
+                onClick={handleAddClick}
+              >
+                Добавить
+              </button>
+            </div>
+          </div>
         </div>
-        
+
         <TaskTable
           tasks={todos}
           onEdit={handleEditClick}
